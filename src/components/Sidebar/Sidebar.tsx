@@ -6,6 +6,11 @@ import SidebarChannel from './SidebarChannel/SidebarChannel';
 import SignalCellularAltIcon from '@material-ui/icons/SignalCellularAlt';
 import CallIcon from '@material-ui/icons/Call';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import {Avatar} from '@material-ui/core';
+import MicIcon from '@material-ui/icons/Mic';
+import HeadsetIcon from '@material-ui/icons/Headset';
+import SettingsIcon from '@material-ui/icons/Settings';
+import HectorImage from '../../assets/pictures/índice.png';
 
 export interface SideBarProps {
     
@@ -15,7 +20,7 @@ const SideBar: React.FC<SideBarProps> = () => {
     return ( 
         <div className="sidebar">
             <div className="sidebar_top">
-                <h3>Clever Programmer</h3>
+                <h3>Hector Ui Clone</h3>
                 <ExpandMoreIcon />
             </div>
 
@@ -52,7 +57,20 @@ const SideBar: React.FC<SideBarProps> = () => {
                 </div>
             </div>
 
+            <div className="sidebar_profile">
+                <Avatar src={HectorImage}/>
+                <div className="sidebar_profileInfo">
+                    <h3>@Hector Lopez</h3>
+                    <p>#thisIsMyId</p>
+                </div>
 
+                <div className="sidebar_profileIcons">
+                    <MicIcon/>
+                    <HeadsetIcon/>
+                    <SettingsIcon/>
+                </div>
+
+            </div>
 
 
 

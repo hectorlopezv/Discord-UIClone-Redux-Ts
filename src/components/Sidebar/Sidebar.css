@@ -46,7 +46,7 @@
     cursor: pointer;
 }
 
-.sidebar_voice{
+.sidebar_voice, .sidebar_profile {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -60,8 +60,13 @@
     color: #4fb185;
 }
 
+
 .sidebar_voiceInfo > h3{
     color: #4fb185;
+}
+
+.sidebar_voiceInfo > p{
+    font-size: smaller;
 }
 
 .sidebar_voiceInfo{
@@ -69,7 +74,20 @@
     padding: 10px;
 }
 
-.sidebar_voiceIcons{
-    display: flex;
-    flex-direction: column;
+.sidebar_voiceIcons > .MuiSvgIcon-root{
+    margin-right: 10px;
+}
+
+.sidebar_profileInfo{
+    flex: 1;
+    padding: 10px;
+}
+.sidebar_profileInfo > h3{
+    color: white;
+}
+
+
+.sidebar_profileIcons{
+
+
 }
