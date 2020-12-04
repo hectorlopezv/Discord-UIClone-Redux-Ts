@@ -5,16 +5,15 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { applyMiddleware, combineReducers } from '@reduxjs/toolkit';
-import {Provider} from 'react-redux';
-import {createStore} from 'redux';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
 const sagaMiddleware = createSagaMiddleware();
 
 export const rootReducer = combineReducers({
 
-  }
-  );
+});
 
 
 const composeEnchancers = composeWithDevTools({
@@ -22,7 +21,7 @@ const composeEnchancers = composeWithDevTools({
   traceLimit: 25
 });
 
-const store =createStore(()=>{}, composeEnchancers(
+const store = createStore(() => { }, composeEnchancers(
   applyMiddleware(sagaMiddleware),
 ));
 
@@ -35,7 +34,7 @@ ReactDOM.render(
     </React.StrictMode>
 
   </Provider>
-,
+  ,
   document.getElementById('root')
 );
 
