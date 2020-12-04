@@ -13,7 +13,7 @@
     color: lightgrey;
     padding: 15px;
     border-radius: 5px;
-    margin: 20px;
+    margin: 8px;
     border-top: 1px solid gray;
     background-color: #474b53;
 }
@@ -36,7 +36,7 @@
 }
 
 .chat_messages{
-    flex: .93;
+    flex: 1;
 }
 
 .chat_inputIcons{
@@ -46,5 +46,5 @@
 }
 
 .chat_inputIcons > .MuiSvgIcon-root{
-    margin-right: 5px;
+    margin-right: 8px;
 }

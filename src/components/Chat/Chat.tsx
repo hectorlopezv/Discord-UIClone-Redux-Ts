@@ -5,6 +5,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import CardGiftcardIcon from '@material-ui/icons/CardGiftcard';
 import GifIcon from '@material-ui/icons/Gif';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
+import Message from './chatMessage/Message';
 
 export interface ChatProps {
     
@@ -15,7 +16,9 @@ const Chat: React.FC<ChatProps> = () => {
         <div className="chat">
             <ChatHeader/>
             <div className="chat_messages">
-
+                <Message />
+                <Message />
+                <Message />
             </div>
 
             <div className="chat_input">

@@ -4,10 +4,11 @@
     align-items: center;
     color: gray;
     padding: 10px;
+    
 }
 
 .chatHeader_left{
-
+    margin-right: 20px;
 }
 
 .chatHeader_left  > h3{
@@ -31,7 +32,8 @@
 
 .chatHeader_right > .MuiSvgIcon-root{
     cursor: pointer;
-    margin-right: 2.5px;
+    margin-right: 4px;
+    margin-left: 4px;
 }
 
 .chatHeader_right > .MuiSvgIcon-root:hover{
