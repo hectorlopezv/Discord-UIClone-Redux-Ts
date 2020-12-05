@@ -83,10 +83,10 @@ const SideBar: React.FC<SideBarProps> = () => {
             </div>
 
             <div className="sidebar_profile">
-                <Avatar onClick={()=> auth.signOut()} src={user.photo}/>
+                <Avatar onClick={()=> auth.signOut()} src={user? user.photo: null}/>
                 <div className="sidebar_profileInfo">
-                    <h3>{user.displayName}</h3>
-                    <p>#{user.uid.substring(0, 5)}</p>
+                    <h3>{user ? user.displayName: null}</h3>
+                    <p>#{user? user.uid.substring(0, 5) : null}</p>
                 </div>
 
                 <div className="sidebar_profileIcons">

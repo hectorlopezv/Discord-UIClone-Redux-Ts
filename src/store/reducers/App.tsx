@@ -9,13 +9,14 @@ const initialState = {
 const AppReducer = (state = initialState, action: any) => {
      if(action.type === actionTypes.SET_CHANNEL){
          return {
-            channelId: action.payload.
-            channelName: action.payload.
+             ...state,
+            channelId: action.payload.channelId,
+            channelName: action.payload.channelName
          }
      }
 
 
-    return  {}
+    return  state;
 
 }
 
