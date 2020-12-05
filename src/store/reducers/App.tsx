@@ -7,8 +7,11 @@ const initialState = {
 }
 
 const AppReducer = (state = initialState, action: any) => {
-     if(action.type === actionTypes.CHANNELID){
-         return {}
+     if(action.type === actionTypes.SET_CHANNEL){
+         return {
+            channelId: action.payload.
+            channelName: action.payload.
+         }
      }
 
 

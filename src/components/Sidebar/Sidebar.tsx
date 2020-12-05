@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import "./Sidebar.css";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddIcon from '@material-ui/icons/Add';
@@ -11,12 +11,38 @@ import MicIcon from '@material-ui/icons/Mic';
 import HeadsetIcon from '@material-ui/icons/Headset';
 import SettingsIcon from '@material-ui/icons/Settings';
 import HectorImage from '../../assets/pictures/índice.png';
+import {useSelector, useDispatch} from 'react-redux';
+import db, { auth  } from '../../firebase';
 
 export interface SideBarProps {
     
 }
 
 const SideBar: React.FC<SideBarProps> = () => {
+    const [channels, setchannels] = useState<any[]>([]);
+
+    const dispatch = useDispatch();
+    const user = useSelector((currentState:any) => currentState.user.user);
+    const addChannelHandler = (event: any) => {
+        const channelName = prompt('Enter new Channel Bro');
+        if(channelName){
+            db.collection('channels').add({
+                channelName: channelName,
+            });
+        }
+    }
+
+    useEffect(() => {//import channels from the db
+        //execute when something in the database changes(listener)
+             db.collection('channels').onSnapshot(snapshot =>{
+            const new_ = snapshot.docs.map(doc => ({
+                id: doc.id,
+                channel: doc.data()
+            }));
+            setchannels(new_);
+        });
+    }, []);
+
     return ( 
         <div className="sidebar">
             <div className="sidebar_top">
@@ -30,15 +56,14 @@ const SideBar: React.FC<SideBarProps> = () => {
                         <ExpandMoreIcon />
                         <h4>Text Channels</h4>
                     </div>
-                    <AddIcon className="sidebar_addChannel" 
-                        onClick={()=>{}}/>
+                    <AddIcon onClick={addChannelHandler} className="sidebar_addChannel" />
                 </div>
 
                 <div className="sidebar_channelsList">
-                    <SidebarChannel />
-                    <SidebarChannel />
-                    <SidebarChannel />
-                    <SidebarChannel />
+                    {channels.map(({id, channel}) => (
+                    <SidebarChannel key={id} id={id} channelName={channel}
+                        
+                    />) )}
                 </div>
             </div>
 
@@ -58,10 +83,10 @@ const SideBar: React.FC<SideBarProps> = () => {
             </div>
 
             <div className="sidebar_profile">
-                <Avatar src={HectorImage}/>
+                <Avatar onClick={()=> auth.signOut()} src={user.photo}/>
                 <div className="sidebar_profileInfo">
-                    <h3>@Hector Lopez</h3>
-                    <p>#thisIsMyId</p>
+                    <h3>{user.displayName}</h3>
+                    <p>#{user.uid.substring(0, 5)}</p>
                 </div>
 
                 <div className="sidebar_profileIcons">
