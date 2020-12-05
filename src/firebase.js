@@ -1,3 +1,4 @@
+import firebase from 'firebase';
 var firebaseConfig = {
     apiKey: "AIzaSyCuNWFRPJefjg5KUqUGq1OGR1UOQi2JJJw",
     authDomain: "discordclone-34505.firebaseapp.com",
@@ -7,3 +8,13 @@ var firebaseConfig = {
     messagingSenderId: "1061942616291",
     appId: "1:1061942616291:web:b36bf94913fcf58c27a5d6"
   };
+
+//Setting upp fireStore and authetnication with google
+  const firebaseApp = firebase.initializeApp(firebaseConfig);
+  const db =  firebaseApp.firestore();
+  const auth = firebaseApp.auth();
+  //providers
+  const provider = new firebase.auth.GoogleAuthProvider();
+
+  export {auth, provider};
+  export default db;

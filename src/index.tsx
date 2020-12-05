@@ -9,10 +9,14 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
+import UserReducer from './store/reducers/User';
+import AppReducer from './store/reducers/App';
+
 const sagaMiddleware = createSagaMiddleware();
 
 export const rootReducer = combineReducers({
-
+  user: UserReducer,
+  app: AppReducer
 });
 
 
@@ -21,18 +25,17 @@ const composeEnchancers = composeWithDevTools({
   traceLimit: 25
 });
 
-const store = createStore(() => { }, composeEnchancers(
+const store = createStore(rootReducer, composeEnchancers(
   applyMiddleware(sagaMiddleware),
 ));
 
 ReactDOM.render(
 
   <Provider store={store}>
-
+    
     <React.StrictMode>
       <App />
     </React.StrictMode>
-
   </Provider>
   ,
   document.getElementById('root')
