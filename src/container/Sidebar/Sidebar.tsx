@@ -1,31 +1,29 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import "./Sidebar.css";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddIcon from '@material-ui/icons/Add';
-import SidebarChannel from './SidebarChannel/SidebarChannel';
+import SidebarChannel from '../../components/Sidebar/SidebarChannel/SidebarChannel';
 import SignalCellularAltIcon from '@material-ui/icons/SignalCellularAlt';
 import CallIcon from '@material-ui/icons/Call';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import {Avatar} from '@material-ui/core';
+import { Avatar } from '@material-ui/core';
 import MicIcon from '@material-ui/icons/Mic';
 import HeadsetIcon from '@material-ui/icons/Headset';
 import SettingsIcon from '@material-ui/icons/Settings';
-import HectorImage from '../../assets/pictures/índice.png';
-import {useSelector, useDispatch} from 'react-redux';
-import db, { auth  } from '../../firebase';
+import { useSelector } from 'react-redux';
+import db, { auth } from '../../firebase';
 
 export interface SideBarProps {
-    
+
 }
 
 const SideBar: React.FC<SideBarProps> = () => {
     const [channels, setchannels] = useState<any[]>([]);
 
-    const dispatch = useDispatch();
-    const user = useSelector((currentState:any) => currentState.user.user);
+    const user = useSelector((currentState: any) => currentState.user.user);
     const addChannelHandler = (event: any) => {
         const channelName = prompt('Enter new Channel Bro');
-        if(channelName){
+        if (channelName) {
             db.collection('channels').add({
                 channelName: channelName,
             });
@@ -34,7 +32,7 @@ const SideBar: React.FC<SideBarProps> = () => {
 
     useEffect(() => {//import channels from the db
         //execute when something in the database changes(listener)
-             db.collection('channels').onSnapshot(snapshot =>{
+        db.collection('channels').onSnapshot(snapshot => {
             const new_ = snapshot.docs.map(doc => ({
                 id: doc.id,
                 channel: doc.data()
@@ -43,7 +41,7 @@ const SideBar: React.FC<SideBarProps> = () => {
         });
     }, []);
 
-    return ( 
+    return (
         <div className="sidebar">
             <div className="sidebar_top">
                 <h3>Hector Ui Clone</h3>
@@ -60,39 +58,39 @@ const SideBar: React.FC<SideBarProps> = () => {
                 </div>
 
                 <div className="sidebar_channelsList">
-                    {channels.map(({id, channel}) => (
-                    <SidebarChannel key={id} id={id} channelName={channel}
-                        
-                    />) )}
+                    {channels.map(({ id, channel }) => (
+                        <SidebarChannel key={id} id={id} channelName={channel}
+
+                        />))}
                 </div>
             </div>
 
             <div className="sidebar_voice">
-                <SignalCellularAltIcon 
-                fontSize="large" 
-                className="sidebar_voiceIcon"/>
+                <SignalCellularAltIcon
+                    fontSize="large"
+                    className="sidebar_voiceIcon" />
                 <div className="sidebar_voiceInfo">
                     <h3>Voice Connected</h3>
                     <p>Stream</p>
                 </div>
 
                 <div className="sidebar_voiceIcons">
-                    <CallIcon/>
-                    <InfoOutlinedIcon/>
+                    <CallIcon />
+                    <InfoOutlinedIcon />
                 </div>
             </div>
 
             <div className="sidebar_profile">
-                <Avatar onClick={()=> auth.signOut()} src={user? user.photo: null}/>
+                <Avatar onClick={() => auth.signOut()} src={user ? user.photo : null} />
                 <div className="sidebar_profileInfo">
-                    <h3>{user ? user.displayName: null}</h3>
-                    <p>#{user? user.uid.substring(0, 5) : null}</p>
+                    <h3>{user ? user.displayName : null}</h3>
+                    <p>#{user ? user.uid.substring(0, 5) : null}</p>
                 </div>
 
                 <div className="sidebar_profileIcons">
-                    <MicIcon/>
-                    <HeadsetIcon/>
-                    <SettingsIcon/>
+                    <MicIcon />
+                    <HeadsetIcon />
+                    <SettingsIcon />
                 </div>
 
             </div>
@@ -100,7 +98,7 @@ const SideBar: React.FC<SideBarProps> = () => {
 
 
         </div>
-     );
+    );
 }
- 
+
 export default SideBar;

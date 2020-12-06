@@ -2,13 +2,13 @@ import React from 'react'
 
 
 export interface SidebarVoiceProps {
-    
+
 }
- 
+
 const SidebarVoice: React.FC<SidebarVoiceProps> = () => {
-    return ( 
+    return (
         <h1>SidebarVoice</h1>
-     );
+    );
 }
- 
+
 export default SidebarVoice;

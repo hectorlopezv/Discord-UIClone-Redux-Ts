@@ -1,7 +1,7 @@
 import * as actionTypes from '../actions/actionTypes';
 
-export const onLogin = (uid: string, 
-    photoURL: string, email: string, 
+export const onLogin = (uid: string,
+    photoURL: string, email: string,
     displayName: string) => {
     return {
         type: actionTypes.LOGIN,

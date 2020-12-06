@@ -1,13 +1,13 @@
-import React, {useEffect, useCallback} from 'react';
+import React, { useEffect, useCallback } from 'react';
 import './App.css';
-import Sidebar from './components/Sidebar/Sidebar';
-import Chat from './components/Chat/Chat';
+import Sidebar from './container/Sidebar/Sidebar';
+import Chat from './container/Chat/Chat';
 import Login from './components/Login/login';
-import {useSelector, useDispatch} from  'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { auth } from './firebase';
 
 //actions
-import {onLogin, onLogout} from './store/actions/User';
+import { onLogin, onLogout } from './store/actions/User';
 
 
 
@@ -15,25 +15,25 @@ import {onLogin, onLogout} from './store/actions/User';
 function App() {
   const dispatch = useDispatch();
   const setLogin = useCallback((uid, photoUrl, email, displayName) => dispatch(onLogin(uid, photoUrl, email, displayName)), [dispatch]);//login action
-  const setLogout = useCallback(() => dispatch(onLogout()),[dispatch]);//login action
-  
+  const setLogout = useCallback(() => dispatch(onLogout()), [dispatch]);//login action
+
   const user = useSelector((stateCurrent: any) => stateCurrent.user.user);
-  
-  
-  useEffect(() =>{//Listener of Fibase
+
+
+  useEffect(() => {//Listener of Fibase
     //verifiy is authenticated or has authenticated
-    auth.onAuthStateChanged((authUser: any) =>{
-      if(authUser){
-        console.log(authUser);
+    auth.onAuthStateChanged((authUser: any) => {
+      if (authUser) {
+
         //the user is login
         //dispatch action
-        setLogin(authUser.uid, 
-          authUser.photoURL, 
-          authUser.email, 
+        setLogin(authUser.uid,
+          authUser.photoURL,
+          authUser.email,
           authUser.displayName
-          )
+        )
 
-      }else{
+      } else {
         //the user is logout or has logout
         setLogout();
       }
@@ -44,10 +44,10 @@ function App() {
   return (
     <div className="App">
       {user ?
-        <> 
-          <Sidebar /> <Chat/> 
-        </> 
-        : <Login/>}
+        <>
+          <Sidebar /> <Chat />
+        </>
+        : <Login />}
 
     </div>
   );

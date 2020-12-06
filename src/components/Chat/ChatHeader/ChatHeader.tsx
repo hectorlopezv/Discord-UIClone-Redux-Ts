@@ -10,17 +10,17 @@ import './ChatHeader.css';
 export interface ChatHeaderProps {
     channelName: string;
 }
- 
+
 const ChatHeader: React.FC<ChatHeaderProps> = (props) => {
 
-    return (  
+    return (
         <div className="chatHeader">
             <div className="chatHeader_left">
                 <h3><span className="chatHeader_hash">#</span>{props.channelName}</h3>
             </div>
 
             <div className="chatHeader_right">
-                <NotificationsIcon/>
+                <NotificationsIcon />
                 <EditLocationRoundedIcon />
                 <PeopleAltRoundedIcon />
                 <div className="chatHeader_search">
@@ -33,5 +33,5 @@ const ChatHeader: React.FC<ChatHeaderProps> = (props) => {
         </div>
     );
 }
- 
+
 export default ChatHeader;

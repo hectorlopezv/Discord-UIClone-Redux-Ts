@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import './Chat.css';
-import ChatHeader from './ChatHeader/ChatHeader';
+import ChatHeader from '../../components/Chat/ChatHeader/ChatHeader';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import CardGiftcardIcon from '@material-ui/icons/CardGiftcard';
 import GifIcon from '@material-ui/icons/Gif';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
-import Message from './chatMessage/Message';
+import Message from '../../components/Chat/chatMessage/Message';
 import { useSelector} from 'react-redux';
 import db from '../../firebase';
 import firebase from 'firebase';
@@ -35,7 +35,7 @@ const Chat: React.FC<ChatProps> = () => {
                 setmessages(snapshot.docs.map((doc:any) => {
                     
                     const data = doc.data();
-                    console.log(data);
+
                     return data;
                 }));
             });
@@ -69,7 +69,7 @@ const Chat: React.FC<ChatProps> = () => {
             />
             <div className="chat_messages">
                 {messages.map((message: any) => {
-                    console.log(message);
+
                     return <Message 
                     key={Math.random().toString()}
                         timestamp={message.timestamp}
