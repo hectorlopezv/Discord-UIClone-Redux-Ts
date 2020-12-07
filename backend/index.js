@@ -16,7 +16,7 @@ const pusher = new Pusher({
 
 // rest of the code remains same
 const app = express();
-const PORT = 8000;
+const PORT = process.env.PORT || 3000;
 
 //midleware
 app.use(express.json());

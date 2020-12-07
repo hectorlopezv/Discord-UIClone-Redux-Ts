@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance_discord = axios.create({
-    baseURL: 'http://[::1]:8000'
+    baseURL: 'https://discordnodejsexpress.herokuapp.com'
 });
 
 export default instance_discord;
