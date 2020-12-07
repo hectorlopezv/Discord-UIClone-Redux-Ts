@@ -29,19 +29,19 @@ const Chat: React.FC<ChatProps> = () => {
 
     useEffect(() => {//get messages ans subribe to pusher
         console.log(channelId);
-        const channel = pusher.subscribe('conversation');
-        channel.bind('newMessage', function(data: any) {
-            //esto me dice que cambio los channels     
-                if( channelName.length > 0){
-                    getMessage(channelId, setmessages);
-                }
-                
-        });
 
         if(channelId !== channelPrev && channelName.length > 0){
             getMessage(channelId, setmessages);
         }
 
+        const channel = pusher.subscribe('conversation');
+        channel.bind('newMessage', function(data: any) {
+            //esto me dice que cambio los channels     
+                if( channelName === channelPrev && channelName.length > 0){
+                    getMessage(channelId, setmessages);
+                }
+                
+        });
         channelPrev = channelName
 
 
