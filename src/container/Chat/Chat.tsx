@@ -7,14 +7,16 @@ import GifIcon from '@material-ui/icons/Gif';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import Message from '../../components/Chat/chatMessage/Message';
 import { useSelector, useDispatch} from 'react-redux';
-import db from '../../firebase';
-import firebase from 'firebase';
+import Pusher from 'pusher-js';
 import {fetchConverstation, newMessagePost} from '../../store/actions/User';
 
 export interface ChatProps {
     
 }
- 
+const pusher = new Pusher('4dcdbf5c9a4316d3eab6', {
+    cluster: 'us2'
+  });
+let channelPrev = '';
 const Chat: React.FC<ChatProps> = () => {
     const dispatch = useDispatch();
     const user = useSelector((currentState:any ) =>  currentState.user.user);
@@ -25,12 +27,28 @@ const Chat: React.FC<ChatProps> = () => {
     const getMessage = useCallback((id:string, setMessage: any) => dispatch(fetchConverstation(id, setMessage)), [dispatch]);
     const newMessage = useCallback((message: string, user: any, id: string) => dispatch(newMessagePost(message, user, id)), [dispatch]);
 
-    useEffect(() => {//get mesasges from firebase
+    useEffect(() => {//get messages ans subribe to pusher
+        console.log(channelId);
+        const channel = pusher.subscribe('conversation');
+        channel.bind('newMessage', function(data: any) {
+            //esto me dice que cambio los channels     
+                if( channelName.length > 0){
+                    getMessage(channelId, setmessages);
+                }
+                
+        });
 
-        if(channelId){
+        if(channelId !== channelPrev && channelName.length > 0){
             getMessage(channelId, setmessages);
         }
-    }, [channelId, getMessage]);
+
+        channelPrev = channelName
+
+
+
+
+
+    }, [channelId, channelName, getMessage]);
 
     const inputHandler = (event:  React.ChangeEvent<HTMLInputElement>) => {
         setInput(event.target.value);

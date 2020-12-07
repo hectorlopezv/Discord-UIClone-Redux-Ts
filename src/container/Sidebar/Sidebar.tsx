@@ -45,6 +45,7 @@ const SideBar: React.FC<SideBarProps> = () => {
         getChannelList(setchannels);
         const channel = pusher.subscribe('channels');
         channel.bind('newChannel', function(data: any) {
+            //esto me dice que cambio los channels
             getChannelList(setchannels);
         });
         

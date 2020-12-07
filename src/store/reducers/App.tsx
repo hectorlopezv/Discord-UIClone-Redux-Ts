@@ -2,8 +2,8 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    channelId: null,
-    channelName: null
+    channelId: '',
+    channelName: ''
 }
 
 const AppReducer = (state = initialState, action: any) => {

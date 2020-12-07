@@ -9,6 +9,7 @@ export function* getChannel(action: any) {
     try{
         const response = yield instance_discord.get(`/get/conversation?id=${action.payload.id}`);
         //call another action
+        console.log(response);
         yield action.payload.setMessages([...response.data[0].conversation]);
     }
     catch(error){
