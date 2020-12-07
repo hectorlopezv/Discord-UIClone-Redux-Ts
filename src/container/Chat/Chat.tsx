@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import './Chat.css';
 import ChatHeader from '../../components/Chat/ChatHeader/ChatHeader';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
@@ -6,56 +6,58 @@ import CardGiftcardIcon from '@material-ui/icons/CardGiftcard';
 import GifIcon from '@material-ui/icons/Gif';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import Message from '../../components/Chat/chatMessage/Message';
-import { useSelector} from 'react-redux';
+import { useSelector, useDispatch} from 'react-redux';
 import db from '../../firebase';
 import firebase from 'firebase';
+import {fetchConverstation, newMessagePost} from '../../store/actions/User';
+
 export interface ChatProps {
     
 }
  
 const Chat: React.FC<ChatProps> = () => {
+    const dispatch = useDispatch();
     const user = useSelector((currentState:any ) =>  currentState.user.user);
     const channelName = useSelector((currentState:any ) =>  currentState.app.channelName);
     const channelId = useSelector((currentState:any ) =>  currentState.app.channelId);
     const [input, setInput] = useState('');
     const [messages, setmessages] = useState([]);
+    const getMessage = useCallback((id:string, setMessage: any) => dispatch(fetchConverstation(id, setMessage)), [dispatch]);
+    const newMessage = useCallback((message: string, user: any, id: string) => dispatch(newMessagePost(message, user, id)), [dispatch]);
+
+    useEffect(() => {//get mesasges from firebase
+
+        if(channelId){
+            getMessage(channelId, setmessages);
+        }
+    }, [channelId, getMessage]);
 
     const inputHandler = (event:  React.ChangeEvent<HTMLInputElement>) => {
         setInput(event.target.value);
     }
 
-    useEffect(() => {//get mesasges from firebase
-        if(channelId) {
-            db.collection('channels')
-            .doc(channelId)
-            .collection('messages')
-            .orderBy('timestamp', 'asc')
-            .onSnapshot((snapshot: any) => {
-                //get messages from firebase(DB)
-                setmessages(snapshot.docs.map((doc:any) => {
-                    
-                    const data = doc.data();
 
-                    return data;
-                }));
-            });
-        }
 
-    }, [channelId])
 
     const sendMessage = (event: any) => {//we send message
         //to the collection with use!
         event.preventDefault();
 
         if(input.length > 0){
-            db.collection('channels')
-            .doc(channelId)
-            .collection('messages')
-            .add({
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                message: input, 
-                user: user
-            });
+
+
+            // db.collection('channels')
+            // .doc(channelId)
+            // .collection('messages')
+            // .add({
+            //     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            //     message: input, 
+            //     user: user
+            // });
+            console.log('el input', input);
+            newMessage(input, {...user}, channelId);
+
+
             setInput('');
         }
 
@@ -69,7 +71,7 @@ const Chat: React.FC<ChatProps> = () => {
             />
             <div className="chat_messages">
                 {messages.map((message: any) => {
-
+            
                     return <Message 
                     key={Math.random().toString()}
                         timestamp={message.timestamp}
@@ -106,4 +108,4 @@ const Chat: React.FC<ChatProps> = () => {
 );
 }
  
-export default Chat;
+export default React.memo(Chat);

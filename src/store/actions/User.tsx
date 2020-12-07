@@ -20,4 +20,34 @@ export const onLogout = () => {
     }
 }
 
+export const fetchChannelsList = (setchannel: any) => {
+  
+    return {
+        type: actionTypes.FETCH_CHANNELS_LIST,
+        payload: { 
+            setChannel : setchannel
+        }
+    }
+}
 
+export const fetchConverstation = (id: string, setmessages:any ) => {
+   
+    return {
+        type: actionTypes.FETCH_CHANNEL,
+        payload: {
+            id: id,
+            setMessages: setmessages
+        }
+    }
+}
+
+export const newMessagePost = (message: string, user: any, id: string)=>{
+    return {
+        type: actionTypes.NEW_MESSAGE,
+        payload: {
+            message: message,
+            user: user,
+            id: id
+        }
+    }
+}

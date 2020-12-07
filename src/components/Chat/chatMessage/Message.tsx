@@ -9,7 +9,7 @@ export interface MessageProps {
 }
 
 const Message: React.FC<MessageProps> = (props) => {
-    const date_ = new Date(props.timestamp?.toDate()).toUTCString();
+    //const date_ = new Date(props.timestamp?.toDate()).toUTCString();
 
     return (
         <div className="message">
@@ -18,7 +18,7 @@ const Message: React.FC<MessageProps> = (props) => {
                 <h4>
                     {props.user.displayName}
                     <span className="message_timestamp">
-                        {date_}
+                        {"hello"/*date_*/}
                     </span>
                 </h4>
                 <p>{props.message}</p>
@@ -28,4 +28,7 @@ const Message: React.FC<MessageProps> = (props) => {
     );
 }
 
-export default Message;
+export default React.memo(Message, (prev:any, next:any)=>{
+    console.log('esto es message', prev, next);
+    return true;
+});

@@ -9,12 +9,13 @@ export interface SidebarChannelProps {
 }
 
 const SidebarChannel: React.FC<SidebarChannelProps> = (props) => {
+    console.log(props);
     //const { id, channel} = props;
     const dispatch = useDispatch();
     const set_Channel = (id: string, name: string) => dispatch(setChannel(id, name));
     return (
-        <div onClick={() => set_Channel(props.id, props.channelName.channelName)} className="sidebarChannel">
-            <h4><span className="sidebarChannel_hash">#</span>{props.channelName.channelName}</h4>
+        <div onClick={() => set_Channel(props.id, String(props.channelName))} className="sidebarChannel">
+            <h4><span className="sidebarChannel_hash">#</span>{props.channelName}</h4>
         </div>
     );
 }

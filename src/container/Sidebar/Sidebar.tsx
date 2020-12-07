@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import "./Sidebar.css";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddIcon from '@material-ui/icons/Add';
@@ -10,8 +10,10 @@ import { Avatar } from '@material-ui/core';
 import MicIcon from '@material-ui/icons/Mic';
 import HeadsetIcon from '@material-ui/icons/Headset';
 import SettingsIcon from '@material-ui/icons/Settings';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import db, { auth } from '../../firebase';
+import {fetchChannelsList} from '../../store/actions/User';
+
 
 export interface SideBarProps {
 
@@ -19,8 +21,14 @@ export interface SideBarProps {
 
 const SideBar: React.FC<SideBarProps> = () => {
     const [channels, setchannels] = useState<any[]>([]);
+    const dispatch = useDispatch();
+
+    //disptach action
+    const getChannelList = useCallback((setchannels: any) => dispatch(fetchChannelsList(setchannels)), [dispatch]);
 
     const user = useSelector((currentState: any) => currentState.user.user);
+    
+    
     const addChannelHandler = (event: any) => {
         const channelName = prompt('Enter new Channel Bro');
         if (channelName) {
@@ -32,14 +40,17 @@ const SideBar: React.FC<SideBarProps> = () => {
 
     useEffect(() => {//import channels from the db
         //execute when something in the database changes(listener)
-        db.collection('channels').onSnapshot(snapshot => {
-            const new_ = snapshot.docs.map(doc => ({
-                id: doc.id,
-                channel: doc.data()
-            }));
-            setchannels(new_);
-        });
-    }, []);
+        // db.collection('channels').onSnapshot(snapshot => {
+        //      const new_ = snapshot.docs.map(doc => ({
+        //          id: doc.id,
+        //          channel: doc.data()
+        //      }));
+        //      setchannels(new_);
+        //  });
+        // console.log('entro');
+        getChannelList(setchannels);
+
+    }, [getChannelList]);
 
     return (
         <div className="sidebar">
@@ -58,9 +69,9 @@ const SideBar: React.FC<SideBarProps> = () => {
                 </div>
 
                 <div className="sidebar_channelsList">
-                    {channels.map(({ id, channel }) => (
-                        <SidebarChannel key={id} id={id} channelName={channel}
-
+                    
+                    {channels.map(({ id, name }) => (
+                        <SidebarChannel key={id} id={id} channelName={name}
                         />))}
                 </div>
             </div>
