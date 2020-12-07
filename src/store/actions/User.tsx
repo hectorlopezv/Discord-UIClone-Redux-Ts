@@ -51,3 +51,12 @@ export const newMessagePost = (message: string, user: any, id: string)=>{
         }
     }
 }
+
+export const newChannelPost = (channelName: string)=>{
+    return {
+        type: actionTypes.NEW_CHANNEL,
+        payload: {
+            channelName: channelName
+        }
+    }
+}

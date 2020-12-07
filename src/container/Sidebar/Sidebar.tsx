@@ -12,12 +12,17 @@ import HeadsetIcon from '@material-ui/icons/Headset';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { useSelector, useDispatch } from 'react-redux';
 import db, { auth } from '../../firebase';
-import {fetchChannelsList} from '../../store/actions/User';
+import {fetchChannelsList, newChannelPost} from '../../store/actions/User';
+import Pusher from 'pusher-js';
 
 
 export interface SideBarProps {
 
 }
+const pusher = new Pusher('4dcdbf5c9a4316d3eab6', {
+    cluster: 'us2'
+  });
+
 
 const SideBar: React.FC<SideBarProps> = () => {
     const [channels, setchannels] = useState<any[]>([]);
@@ -25,30 +30,24 @@ const SideBar: React.FC<SideBarProps> = () => {
 
     //disptach action
     const getChannelList = useCallback((setchannels: any) => dispatch(fetchChannelsList(setchannels)), [dispatch]);
-
+    const newChannel = (newChannel: string) => dispatch(newChannelPost(newChannel));
     const user = useSelector((currentState: any) => currentState.user.user);
     
     
     const addChannelHandler = (event: any) => {
         const channelName = prompt('Enter new Channel Bro');
         if (channelName) {
-            db.collection('channels').add({
-                channelName: channelName,
-            });
+            newChannel(channelName)
         }
     }
 
-    useEffect(() => {//import channels from the db
-        //execute when something in the database changes(listener)
-        // db.collection('channels').onSnapshot(snapshot => {
-        //      const new_ = snapshot.docs.map(doc => ({
-        //          id: doc.id,
-        //          channel: doc.data()
-        //      }));
-        //      setchannels(new_);
-        //  });
-        // console.log('entro');
+    useEffect(() => {
         getChannelList(setchannels);
+        const channel = pusher.subscribe('channels');
+        channel.bind('newChannel', function(data: any) {
+            getChannelList(setchannels);
+        });
+        
 
     }, [getChannelList]);
 

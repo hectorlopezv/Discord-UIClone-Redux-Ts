@@ -9,26 +9,26 @@ export interface MessageProps {
 }
 
 const Message: React.FC<MessageProps> = (props) => {
-    //const date_ = new Date(props.timestamp?.toDate()).toUTCString();
+    const {photo, displayName} = props.user;
+    const{ message, timestamp } = props;
+
+    const date_ = new Date(parseInt(timestamp)).toDateString();
 
     return (
         <div className="message">
-            <Avatar src={props.user.photo} />
+            <Avatar src={photo} />
             <div className="message_info">
                 <h4>
-                    {props.user.displayName}
+                    {displayName}
                     <span className="message_timestamp">
-                        {"hello"/*date_*/}
+                        {date_}
                     </span>
                 </h4>
-                <p>{props.message}</p>
+                <p>{message}</p>
             </div>
 
         </div>
     );
 }
 
-export default React.memo(Message, (prev:any, next:any)=>{
-    console.log('esto es message', prev, next);
-    return true;
-});
+export default React.memo(Message);

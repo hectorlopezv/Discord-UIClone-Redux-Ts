@@ -1,6 +1,4 @@
-import { call, put, takeEvery, takeLatest, delay } from 'redux-saga/effects'
 import instance_discord from '../../axios';
-import {setChannel} from '../actions/App';
 
 //update actual channel in store
 export function* getChannel(action: any) {
@@ -49,5 +47,19 @@ export function* newMessage(action: any){
 
     }  
 }
+
+
+export function* newChannel(action: any){
+    //post new message
+    try{
+        yield instance_discord.post('/new/channel', { 
+            channelName: action.payload.channelName
+        });
+    }
+    catch(error){
+
+    }  
+}
+
 
 

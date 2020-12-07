@@ -5,4 +5,4 @@ export const SET_CHANNEL = 'SET_CHANNEL';
 export const FETCH_CHANNEL = 'FETCH_CHANNEL';
 export const FETCH_CHANNELS_LIST = 'FETCH_CHANNELS_LIST';
 export const NEW_MESSAGE = 'NEW_MESSAGE';
-
+export const NEW_CHANNEL = 'NEW_CHANNEL';

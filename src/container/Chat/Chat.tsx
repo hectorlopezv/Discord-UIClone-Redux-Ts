@@ -36,33 +36,15 @@ const Chat: React.FC<ChatProps> = () => {
         setInput(event.target.value);
     }
 
-
-
-
     const sendMessage = (event: any) => {//we send message
         //to the collection with use!
         event.preventDefault();
 
         if(input.length > 0){
-
-
-            // db.collection('channels')
-            // .doc(channelId)
-            // .collection('messages')
-            // .add({
-            //     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            //     message: input, 
-            //     user: user
-            // });
-            console.log('el input', input);
             newMessage(input, {...user}, channelId);
-
-
             setInput('');
         }
-
     }
-
 
     return (  
         <div className="chat">
@@ -108,4 +90,4 @@ const Chat: React.FC<ChatProps> = () => {
 );
 }
  
-export default React.memo(Chat);
+export default Chat;
